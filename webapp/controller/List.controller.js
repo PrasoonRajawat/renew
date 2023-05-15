@@ -140,7 +140,7 @@ sap.ui.define([
             var sQuery = oEvent.getParameter("query");
 
             if (sQuery) {
-                this._oListFilterState.aSearch = [new Filter("WiId", FilterOperator.Contains, sQuery)];
+                this._oListFilterState.aSearch = [new Filter("WiText", FilterOperator.Contains, sQuery)];
             } else {
                 this._oListFilterState.aSearch = [];
             }
@@ -176,12 +176,12 @@ sap.ui.define([
             if (!this.byId("viewSettingsDialog")) {
                 Fragment.load({
                     id: this.getView().getId(),
-                    name: "com.ibscms.p1poapproval.view.ViewSettingsDialog",
+                    name: "com.ibscms.demo.view.ViewSettingDialog",
                     controller: this
                 }).then(function(oDialog){
                     // connect dialog to the root view of this component (models, lifecycle)
                     this.getView().addDependent(oDialog);
-                    oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+                    //oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
                     oDialog.open(sDialogTab);
                 }.bind(this));
             } else {

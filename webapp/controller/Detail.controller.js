@@ -233,27 +233,35 @@ sap.ui.define([
             oEntry.WiId = sId;
             if (actionText === 'Approve') {
                 oEntry.WiStat = 'A';
+                oEntry.DecisionKey = '0001'
             }
             else {
                 oEntry.WiStat = 'R';
+                oEntry.DecisionKey = '0002'
             }
-            var srvUrl = "/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/";
+            var srvUrl = "/sap/opu/odata/IWPGW/TASKPROCESSING;mo;v=2/";
             var oModel = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-            var readurl = "/ApproveRejectPO1";
+            var readurl = "/Decision";
             var that = this;
             oModel.callFunction(readurl, {
                 method: "POST",
-                urlParameters: {
-                    "WiId": oEntry.WiId,
-                    "WiStat": oEntry.WiStat
+                //urlParameters: {
+                //    "WiId": oEntry.WiId,
+                //    "WiStat": oEntry.WiStat
+                //},
+                urlParameters:{
+                    "SAP__Origin": 'LOCAL_PGW',
+                    "InstanceID": oEntry.WiId,
+                    "DecisionKey":oEntry.DecisionKey,
+                    "Comments":'test'
                 },
                 success: function (oData, oResponse) {
 
-                    var hdrMessage = oResponse.headers["sap-message"];
-                    var hdrMessageObject = JSON.parse(hdrMessage);
-                    MessageBox.show(
-                        hdrMessageObject.message, {
-                        icon: MessageBox.Icon.success,
+                    //var hdrMessage = oResponse.headers["sap-message"];
+                    //var hdrMessageObject = oResponse.statusCode;
+                    MessageBox.success(
+                        "PO Approved", {
+                        title: "Success",
                             
                         //actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                         //emphasizedAction: MessageBox.Action.YES,
@@ -267,8 +275,22 @@ sap.ui.define([
                     );
 
                 },
-                error: function (oError) {
-
+                error: function (oError,oResponse) {
+                    //var hdrMessage = oResponse.headers["sap-message"];
+                    //var hdrMessageObject = JSON.parse(hdrMessage);
+                    var a  = JSON.parse(oError.response.body);
+                    var hdrMessageObject = a.error["message"].value;
+                    MessageBox.error(
+                        hdrMessageObject,{
+                            title: "Error",
+                            onClose: function (oAction) {
+                                that.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
+                                // No item should be selected on list after detail page is closed
+                                //this.getOwnerComponent().oListSelector.clearListListSelection();
+                                that.getRouter().navTo("list");
+                            }
+                        }
+                    );
                 }
 
             });
