@@ -260,7 +260,7 @@ sap.ui.define([
                     //var hdrMessage = oResponse.headers["sap-message"];
                     //var hdrMessageObject = oResponse.statusCode;
                     MessageBox.success(
-                        "PO Approved", {
+                        "PO Processed", {
                         title: "Success",
                             
                         //actions: [MessageBox.Action.YES, MessageBox.Action.NO],
