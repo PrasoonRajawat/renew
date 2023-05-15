@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZZ1_TEST_RENEW_PO_APPR_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="WIPOGET" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="WiId"/>
+                </Key>
+                <Property Name="WiId" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Work Item ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiType" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCreator" Type="Edm.String" MaxLength="90" sap:unicode="false" sap:label="Creator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiLang" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Language" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiText" Type="Edm.String" MaxLength="120" sap:unicode="false" sap:label="Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiRhtext" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Task text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCd" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Creation Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCt" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Creation Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiAagent" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Agent" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiChckwi" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Workflow" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiRhTask" Type="Edm.String" Nullable="false" MaxLength="14" sap:unicode="false" sap:label="Task" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiPrio" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Priority" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiConfirm" Type="Edm.Boolean" sap:unicode="false" sap:label="Confirm" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiReject" Type="Edm.Boolean" sap:unicode="false" sap:label="Rejectable" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiForwBy" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Forwarder" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiDisable" Type="Edm.Boolean" sap:unicode="false" sap:label="Lock flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Statustext" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiStat" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiLed" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Latest End" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiLet" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Latest end time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Typetext" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="WI Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tclass" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Classification" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NoteExist" Type="Edm.Boolean" sap:unicode="false" sap:label="Attachments" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiDhStat" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Deadline Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Dhstatext" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NoExecute" Type="Edm.Boolean" sap:unicode="false" sap:label="Not executable" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiRelease" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="SAP Release" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCdFtd" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Created on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCtFtd" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Creation Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiLedFtd" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Latest end date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiLetFtd" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Latest end time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiAaName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Agent" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DefGuid" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Unique ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCrtts" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Creation" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NoteCount" Type="Edm.Int32" sap:unicode="false" sap:label="Attachments" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WiCompEv" Type="Edm.Boolean" sap:unicode="false" sap:label="Completion by event" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Proccat" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Process Category" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ReferenceNodeid" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Reference-Step" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="ZZ1_TEST_RENEW_PO_APPR_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="WIPOGETSet" EntityType="ZZ1_TEST_RENEW_PO_APPR_SRV.WIPOGET" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="https://saps4d.vets4pets.com:44380/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://saps4d.vets4pets.com:44380/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

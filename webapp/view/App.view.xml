@@ -1,0 +1,17 @@
+<mvc:View controllerName="com.ibscms.demo.controller.App"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    height="100%"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <App
+        id="app"
+        busy="{appView>/busy}"
+        busyIndicatorDelay="{appView>/delay}">
+        <f:FlexibleColumnLayout
+            id="layout"
+            layout="{appView>/layout}"
+            backgroundDesign="Translucent">
+        </f:FlexibleColumnLayout>
+    </App>
+</mvc:View>

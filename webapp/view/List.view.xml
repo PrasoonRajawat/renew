@@ -1,0 +1,52 @@
+<mvc:View controllerName="com.ibscms.demo.controller.List"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <Table
+                id="productsTable"
+                inset="false"
+                items="{/results}"
+                class="sapFDynamicPageAlignContent"
+                width="auto">
+	<columns>
+			<Column
+				width="12em">
+				<Text text="WorkFlow ID" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="Status" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="End">
+				<Text text="Agent" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Work Type" />
+			</Column>
+			
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<ObjectIdentifier
+						title="{WiId}"/>
+					<Text
+						text="{Statustext}" />
+					<Text
+						text="{WiAagent}" />
+					<Text text = "{WiType}"/> 
+				</cells>
+			</ColumnListItem>
+		</items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
