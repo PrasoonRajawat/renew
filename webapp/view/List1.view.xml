@@ -9,7 +9,7 @@
         preserveHeaderStateOnScroll="true"
         toggleHeaderOnTitleClick="false">
         <semantic:titleContent>
-            <Image src="../assets/renew.png" tooltip="Company logo" width = "100px"/>
+            <Image src="{imageModel>/path}/assets/renew.png" tooltip="Company logo" width = "100px"/>
         </semantic:titleContent>
         <semantic:titleHeading>
             <Title

@@ -13,7 +13,7 @@
             <Title
                 text="{WiAagent}"
                 level="H2"/>
-                <Image src="../assets/renew.png" tooltip="Company logo" width = "100px"/>
+                <Image src="{imageModel>/path}/assets/renew.png" tooltip="Company logo" width = "200px"/>
         </semantic:titleHeading>
         <semantic:headerContent>
             <ObjectAttribute title="{WiAagent}"/>
