@@ -101,10 +101,10 @@
                     press=".toggleFullScreen"/>
         </semantic:exitFullScreenAction>
         	<semantic:positiveAction>
-					<semantic:PositiveAction text="Approve" press="onApprovePress"/>
+					<semantic:PositiveAction text="Approve" press="onPOProcessPress"/>
 				</semantic:positiveAction>
 				<semantic:negativeAction>
-					<semantic:NegativeAction text="Reject" press="onRejectPress"/>
+					<semantic:NegativeAction text="Reject" press="onPOProcessPress"/>
 				</semantic:negativeAction>
         	
     </semantic:SemanticPage>

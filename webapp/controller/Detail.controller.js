@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "com/ibscms/demo/model/formatter",
     "sap/m/library",
-    "sap/m/MessageBox"
-], function (BaseController, JSONModel, formatter, mobileLibrary, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/core/BusyIndicator"
+], function (BaseController, JSONModel, formatter, mobileLibrary, MessageBox, BusyIndicator) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -233,8 +234,9 @@ sap.ui.define([
                 this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
             }
         },
-        onApprovePress: function (oEvent) {
+        onPOProcessPress: function (oEvent) {
 
+           BusyIndicator.show(100);
             var actionText = oEvent.getSource().mProperties.text;
             var sId = this.getView().getModel().getData().results[0].WiId
             var oEntry = {};
@@ -281,6 +283,7 @@ sap.ui.define([
                         }
                     }
                     );
+                    BusyIndicator.hide();
 
                 },
                 error: function (oError,oResponse) {
@@ -299,6 +302,7 @@ sap.ui.define([
                             }
                         }
                     );
+                    BusyIndicator.hide();
                 }
 
             });
