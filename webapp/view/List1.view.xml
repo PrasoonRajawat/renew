@@ -28,7 +28,7 @@
                     path: '/results',
                     sorter: {
                         path: 'WiId',
-                        descending: false
+                        descending: true
                     },
                     groupHeaderFactory: '.createGroupHeader'
                 }"
