@@ -3,11 +3,11 @@
  */
 
 sap.ui.define([
-        "sap/ui/core/UIComponent",
-        "sap/ui/Device",
-        "com/ibscms/demo/model/models",
-        "com/ibscms/demo/controller/ListSelector"
-    ],
+    "sap/ui/core/UIComponent",
+    "sap/ui/Device",
+    "com/ibscms/demo/model/models",
+    "com/ibscms/demo/controller/ListSelector"
+],
     function (UIComponent, Device, models, ListSelector) {
         "use strict";
 
@@ -33,6 +33,14 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                var oRootPath = jQuery.sap.getModulePath("com.ibscms.demo"); // your resource root
+
+                var oImageModel = new sap.ui.model.json.JSONModel({
+                    path: oRootPath,
+                });
+
+                this.setModel(oImageModel, "imageModel");
             },
             /**
              * The component is destroyed by UI5 automatically.
