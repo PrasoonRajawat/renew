@@ -34,7 +34,7 @@ sap.ui.define([
             this.setModel(oViewModel, "detailView");
 
             this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
-            
+
         },
 
         /* =========================================================== */
@@ -236,7 +236,6 @@ sap.ui.define([
         },
         onPOProcessPress: function (oEvent) {
 
-           BusyIndicator.show(100);
             var actionText = oEvent.getSource().mProperties.text;
             var sId = this.getView().getModel().getData().results[0].WiId
             var oEntry = {};
@@ -259,11 +258,11 @@ sap.ui.define([
                 //    "WiId": oEntry.WiId,
                 //    "WiStat": oEntry.WiStat
                 //},
-                urlParameters:{
+                urlParameters: {
                     "SAP__Origin": 'LOCAL_PGW',
                     "InstanceID": oEntry.WiId,
-                    "DecisionKey":oEntry.DecisionKey,
-                    "Comments":'test'
+                    "DecisionKey": oEntry.DecisionKey,
+                    "Comments": 'test'
                 },
                 success: function (oData, oResponse) {
 
@@ -272,37 +271,35 @@ sap.ui.define([
                     MessageBox.success(
                         "PO Processed", {
                         title: "Success",
-                            
+
                         //actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                         //emphasizedAction: MessageBox.Action.YES,
                         onClose: function (oAction) {
                             that.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
                             // No item should be selected on list after detail page is closed
-                            that.getOwnerComponent().oListSelector.clearListListSelection();
+                            //that.getOwnerComponent().oListSelector.clearListListSelection();
                             that.getRouter().navTo("list");
                         }
                     }
                     );
-                    BusyIndicator.hide();
 
                 },
-                error: function (oError,oResponse) {
+                error: function (oError, oResponse) {
                     //var hdrMessage = oResponse.headers["sap-message"];
                     //var hdrMessageObject = JSON.parse(hdrMessage);
-                    var a  = JSON.parse(oError.response.body);
+                    var a = JSON.parse(oError.response.body);
                     var hdrMessageObject = a.error["message"].value;
                     MessageBox.error(
-                        hdrMessageObject,{
-                            title: "Error",
-                            onClose: function (oAction) {
-                                that.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
-                                // No item should be selected on list after detail page is closed
-                                that.getOwnerComponent().oListSelector.clearListListSelection();
-                                that.getRouter().navTo("list");
-                            }
+                        hdrMessageObject, {
+                        title: "Error",
+                        onClose: function (oAction) {
+                            that.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
+                            // No item should be selected on list after detail page is closed
+                            //that.getOwnerComponent().oListSelector.clearListListSelection();
+                            that.getRouter().navTo("list");
                         }
+                    }
                     );
-                    BusyIndicator.hide();
                 }
 
             });
