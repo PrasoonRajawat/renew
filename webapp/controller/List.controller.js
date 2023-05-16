@@ -1,6 +1,5 @@
 sap.ui.define([
     "com/ibscms/demo/controller/BaseController",
-    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/Sorter",
@@ -9,101 +8,107 @@ sap.ui.define([
     "sap/ui/Device",
     "sap/ui/core/Fragment",
     "com/ibscms/demo/model/formatter"
-],
-    /**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
-     */
-    function (BaseController, Controller, JSONModel, Filter, Sorter, FilterOperator, GroupHeaderListItem, Device, Fragment, formatter) {
-        "use strict";
+], function (BaseController, JSONModel, Filter, Sorter, FilterOperator, GroupHeaderListItem, Device, Fragment, formatter) {
+    "use strict";
 
-        return BaseController.extend("com.ibscms.demo.controller.List", {
-            formatter: formatter,
-            onInit: function () {
-                    // Control state model
+    return BaseController.extend("com.ibscms.demo.controller.List", {
+        formatter: formatter,
+
+        /* =========================================================== */
+        /* lifecycle methods                                           */
+        /* =========================================================== */
+
+        /**
+         * Called when the list controller is instantiated. It sets up the event handling for the list/detail communication and other lifecycle tasks.
+         * @public
+         */
+        onInit: function () {
+            // Control state model
             var oList = this.byId("list"),
-            oViewModel = this._createViewModel();
+                oViewModel = this._createViewModel();
             // Put down list's original value for busy indicator delay,
             // so it can be restored later on. Busy handling on the list is
             // taken care of by the list itself.
-            //iOriginalBusyDelay = oList.getBusyIndicatorDelay();
+            var iOriginalBusyDelay = oList.getBusyIndicatorDelay();
 
 
-        this._oGroupFunctions = {
-            WiId: function(oContext) {
-                var iNumber = oContext.getProperty('WiId'),
-                    key, text;
-                if (iNumber <= 20) {
-                    key = "LE20";
-                    text = this.getResourceBundle().getText("listGroup1Header1");
-                } else {
-                    key = "GT20";
-                    text = this.getResourceBundle().getText("listGroup1Header2");
-                }
-                return {
-                    key: key,
-                    text: text
-                };
-            }.bind(this)
-        };
+            this._oGroupFunctions = {
+                WiId: function (oContext) {
+                    var iNumber = oContext.getProperty('WiId'),
+                        key, text;
+                    if (iNumber <= 20) {
+                        key = "LE20";
+                        text = this.getResourceBundle().getText("listGroup1Header1");
+                    } else {
+                        key = "GT20";
+                        text = this.getResourceBundle().getText("listGroup1Header2");
+                    }
+                    return {
+                        key: key,
+                        text: text
+                    };
+                }.bind(this)
+            };
 
-        this._oList = oList;
-        // keeps the filter and search state
-        this._oListFilterState = {
-            aFilter : [],
-            aSearch : []
-        };
+            this._oList = oList;
+            // keeps the filter and search state
+            this._oListFilterState = {
+                aFilter: [],
+                aSearch: []
+            };
 
-        this.setModel(oViewModel, "listView");
-        // Make sure, busy indication is showing immediately so there is no
-        // break after the busy indication for loading the view's meta data is
-        // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
-        oList.attachEventOnce("updateFinished", function(){
-            // Restore original busy indicator delay for the list
-            //oViewModel.setProperty("/delay", iOriginalBusyDelay);
-            oViewModel.setProperty("/delay");
-        });
+            this.setModel(oViewModel, "listView");
+            // Make sure, busy indication is showing immediately so there is no
+            // break after the busy indication for loading the view's meta data is
+            // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
+            oList.attachEventOnce("updateFinished", function () {
+                // Restore original busy indicator delay for the list
+                oViewModel.setProperty("/delay", iOriginalBusyDelay);
+                oViewModel.setProperty("/delay");
+            });
 
-        this.getView().addEventDelegate({
-            onBeforeFirstShow: function () {
-                this.getOwnerComponent().oListSelector.setBoundList(oList);
-            }.bind(this)
-        });
-        this.fetchData();
-        
-       this.getRouter().getRoute("list").attachPatternMatched(this._onMasterMatched, this);
-        this.getRouter().attachBypassed(this.onBypassed, this);
-            },
-        fetchData: function(){
-            var srvUrl = "/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/";
-        var oModel = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
-        var readurl = "/WIPOGETSet";
-            var filter1= new sap.ui.model.Filter({
+            this.getView().addEventDelegate({
+                onBeforeFirstShow: function () {
+                    this.getOwnerComponent().oListSelector.setBoundList(oList);
+                }.bind(this)
+            });
+            this.fetchData();
+
+            this.getRouter().getRoute("list").attachPatternMatched(this._onMasterMatched, this);
+            this.getRouter().attachBypassed(this.onBypassed, this);
+        },
+        fetchData: function () {
+            //var srvUrl = "/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/";
+            //var oModel = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+            var oModel = this.getOwnerComponent().getModel();
+            var readurl = "/WIPOGETSet";
+            var filter1 = new sap.ui.model.Filter({
                 path: "WiId",
                 operator: sap.ui.model.FilterOperator.EQ,
                 value1: "X"
             });
-            var filter2= new sap.ui.model.Filter({
+            var filter2 = new sap.ui.model.Filter({
                 path: "WiRhTask",
                 operator: sap.ui.model.FilterOperator.EQ,
                 value1: "TS00800531"
             });
-            
+
             var that = this;
-            oModel.read(readurl,{
-                filters: [filter1,filter2],
-                success:function(oData){
-                    if(oData){
+            oModel.read(readurl, {
+                filters: [filter1, filter2],
+                success: function (oData) {
+                    if (oData) {
                         var newData = oData;
-                       
+
                         var newModel = new JSONModel(newData);
                         that.getView().setModel(newModel);
                     }
                 },
-                error: function(oError){
+                error: function (oError) {
 
                 }
             });
-        },    
+        },
         /* =========================================================== */
         /* event handlers                                              */
         /* =========================================================== */
@@ -114,7 +119,7 @@ sap.ui.define([
          * @param {sap.ui.base.Event} oEvent the update finished event
          * @public
          */
-        onUpdateFinished : function (oEvent) {
+        onUpdateFinished: function (oEvent) {
             // update the list object counter after new data is loaded
             this._updateListItemCount(oEvent.getParameter("total"));
         },
@@ -178,7 +183,7 @@ sap.ui.define([
                     id: this.getView().getId(),
                     name: "com.ibscms.demo.view.ViewSettingDialog",
                     controller: this
-                }).then(function(oDialog){
+                }).then(function (oDialog) {
                     // connect dialog to the root view of this component (models, lifecycle)
                     this.getView().addDependent(oDialog);
                     //oDialog.addStyleClass(this.getOwnerComponent().getContentDensityClass());
@@ -199,7 +204,7 @@ sap.ui.define([
          * @public
          */
         onConfirmViewSettingsDialog: function (oEvent) {
-            
+
             var aFilterItems = oEvent.getParameters().filterItems,
                 aFilters = [],
                 aCaptions = [];
@@ -208,13 +213,13 @@ sap.ui.define([
             // combine the filter array and the filter string
             aFilterItems.forEach(function (oItem) {
                 switch (oItem.getKey()) {
-                    case "Filter1" :
+                    case "Filter1":
                         aFilters.push(new Filter("WiId", FilterOperator.LE, 100));
                         break;
-                    case "Filter2" :
+                    case "Filter2":
                         aFilters.push(new Filter("WiId", FilterOperator.GT, 100));
                         break;
-                    default :
+                    default:
                         break;
                 }
                 aCaptions.push(oItem.getText());
@@ -236,7 +241,7 @@ sap.ui.define([
                 sPath,
                 bDescending,
                 aSorters = [];
-            
+
             // apply sorter to binding
             // (grouping comes before sorting)
             if (mParams.groupItem) {
@@ -245,7 +250,7 @@ sap.ui.define([
                 var vGroup = this._oGroupFunctions[sPath];
                 aSorters.push(new Sorter(sPath, bDescending, vGroup));
             }
-            
+
             sPath = mParams.sortItem.getKey();
             bDescending = mParams.sortDescending;
             aSorters.push(new Sorter(sPath, bDescending));
@@ -287,8 +292,8 @@ sap.ui.define([
          */
         createGroupHeader: function (oGroup) {
             return new GroupHeaderListItem({
-                title : oGroup.text,
-                upperCase : false
+                title: oGroup.text,
+                upperCase: false
             });
         },
 
@@ -297,7 +302,7 @@ sap.ui.define([
          * We navigate back in the browser history
          * @public
          */
-        onNavBack: function() {
+        onNavBack: function () {
             // eslint-disable-next-line fiori-custom/sap-no-history-manipulation
             history.go(-1);
         },
@@ -307,7 +312,7 @@ sap.ui.define([
         /* =========================================================== */
 
 
-        _createViewModel: function() {
+        _createViewModel: function () {
             return new JSONModel({
                 isFilterBarVisible: false,
                 filterBarLabel: "",
@@ -319,7 +324,7 @@ sap.ui.define([
             });
         },
 
-        _onMasterMatched:  function() {
+        _onMasterMatched: function () {
             //Set the layout property of the FCL control to 'OneColumn'
             this.getModel("appView").setProperty("/layout", "OneColumn");
             this.fetchData();
@@ -336,7 +341,7 @@ sap.ui.define([
             // set the layout property of FCL control to show two columns
             this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
             this.getRouter().navTo("object", {
-                objectId : oItem.getBindingContext().getProperty("WiId")
+                objectId: oItem.getBindingContext().getProperty("WiId")
             }, bReplace);
         },
 
@@ -376,11 +381,11 @@ sap.ui.define([
          * @param {string} sFilterBarText the selected filter value
          * @private
          */
-        _updateFilterBar : function (sFilterBarText) {
+        _updateFilterBar: function (sFilterBarText) {
             var oViewModel = this.getModel("listView");
             oViewModel.setProperty("/isFilterBarVisible", (this._oListFilterState.aFilter.length > 0));
             oViewModel.setProperty("/filterBarLabel", this.getResourceBundle().getText("listFilterBarText", [sFilterBarText]));
         }
 
-        });
     });
+});

@@ -33,6 +33,7 @@ sap.ui.define([
             this.setModel(oViewModel, "detailView");
 
             this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+            
         },
 
         /* =========================================================== */
@@ -88,15 +89,22 @@ sap.ui.define([
          */
         _onObjectMatched: function (oEvent) {
             var sObjectId = oEvent.getParameter("arguments").objectId;
-            this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
             this._getData(sObjectId);
-            //this._bindView("/results");
+            this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
+            //this.getModel().metadataLoaded().then( function() {
+            //    var sObjectPath = this.getModel().createKey("WIPOGETSet", {
+            //        WiId:  sObjectId ,
+            //        WiRhTask : "TS00800531"
+            //    });
+            //    this._bindView("/" + sObjectPath);
+            //}.bind(this));
         },
         _getData: function (temp) {
             this.getModel("detailView").setProperty("/busy", true);
             var useFulData = temp;
-            var srvUrl = "/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/";
-            var oModel = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+            //var srvUrl = "/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/";
+            //var oModel = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+            var oModel = this.getOwnerComponent().getModel();
             var readurl = "/WIPOGETSet";
             var filter1 = new sap.ui.model.Filter({
                 path: "WiId",
@@ -158,15 +166,15 @@ sap.ui.define([
                 this.getRouter().getTargets().display("detailObjectNotFound");
                 // if object could not be found, the selection in the list
                 // does not make sense anymore.
-                this.getOwnerComponent().oListSelector.clearListListSelection();
+                this.getOwnerComponent().oListSelector.clearMasterListSelection();
                 return;
             }
 
             var sPath = oElementBinding.getPath(),
                 oResourceBundle = this.getResourceBundle(),
                 oObject = oView.getModel().getObject(sPath),
-                sObjectId = oObject.OrderID,
-                sObjectName = oObject.OrderID,
+                sObjectId = oObject.WiId,
+                sObjectName = oObject.WiId,
                 oViewModel = this.getModel("detailView");
 
             this.getOwnerComponent().oListSelector.selectAListItem(sPath);
@@ -268,7 +276,7 @@ sap.ui.define([
                         onClose: function (oAction) {
                             that.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
                             // No item should be selected on list after detail page is closed
-                            //this.getOwnerComponent().oListSelector.clearListListSelection();
+                            that.getOwnerComponent().oListSelector.clearListListSelection();
                             that.getRouter().navTo("list");
                         }
                     }
@@ -286,7 +294,7 @@ sap.ui.define([
                             onClose: function (oAction) {
                                 that.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
                                 // No item should be selected on list after detail page is closed
-                                //this.getOwnerComponent().oListSelector.clearListListSelection();
+                                that.getOwnerComponent().oListSelector.clearListListSelection();
                                 that.getRouter().navTo("list");
                             }
                         }
