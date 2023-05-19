@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>simple|
 |**Service Type**<br>SAP System (ABAP On Premise)|
-|**Service URL**<br>https://saps4d.vets4pets.com//sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV
+|**Service URL**<br>https://s4hana1909.server.com:8006/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV
 |**Module Name**<br>demo|
 |**Application Title**<br>PO Inbox|
 |**Namespace**<br>com.ibscms|
