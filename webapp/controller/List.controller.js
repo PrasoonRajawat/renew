@@ -80,6 +80,7 @@ sap.ui.define([
         fetchData: function () {
             //var srvUrl = "/sap/opu/odata/sap/ZZ1_TEST_RENEW_PO_APPR_SRV/";
             //var oModel = new sap.ui.model.odata.ODataModel(srvUrl, true, "", "");
+            
             var oModel = this.getOwnerComponent().getModel();
             var readurl = "/WIPOGETSet";
             var filter1 = new sap.ui.model.Filter({
@@ -90,7 +91,7 @@ sap.ui.define([
             var filter2 = new sap.ui.model.Filter({
                 path: "WiRhTask",
                 operator: sap.ui.model.FilterOperator.EQ,
-                value1: "TS00800531"
+                value1: "TS20000166"
             });
 
             var that = this;

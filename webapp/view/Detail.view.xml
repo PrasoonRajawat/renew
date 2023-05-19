@@ -2,7 +2,7 @@
     controllerName="com.ibscms.demo.controller.Detail"
     xmlns="sap.m"
     xmlns:semantic="sap.f.semantic"
-    xmlns:form="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload"
     xmlns:mvc="sap.ui.core.mvc">
 
     <semantic:SemanticPage
@@ -17,10 +17,31 @@
         </semantic:titleHeading>
         <semantic:headerContent>
             <ObjectAttribute title="{WiAagent}"/>
-           
+            <UploadCollection  
+                id="UploadCollection"
+                change="onChange" 
+                mode="SingleSelectMaster" 
+                beforeUploadStarts="onBeforeUploadStarts" 
+                items="{path: 'oModelAttach>/results'}" 						
+                uploadUrl="/sap/opu/odata/sap/ZFILE_EX_SRV/FileSet" 
+                uploadComplete="onUploadComplete" noDataText="No files found."
+                noDataDescription="Drop files to upload, or use the &quot;+&quot; button.">
+                <items>
+                    <UploadCollectionItem 
+                        documentId="{ID}" 
+                        fileName="{oModelAttach>FileName}" 
+                        url="/sap/opu/odata/sap/ZFILE_EX_SRV/FileSet(guid'{ID}')/$value"
+                        mimeType="{oModelAttach>mime_type}"
+                        enableEdit="false" 
+                        enableDelete="false" 
+                        visibleDelete="false" 
+                        visibleEdit="false">
+                    </UploadCollectionItem>
+                </items>
+          </UploadCollection>
         </semantic:headerContent>
         <semantic:content>
-
+          
             <Table
                 id="lineItemsList"
                 width="auto"

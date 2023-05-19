@@ -34,6 +34,7 @@ sap.ui.define([
             this.setModel(oViewModel, "detailView");
 
             this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+            
 
         },
 
@@ -115,7 +116,7 @@ sap.ui.define([
             var filter2 = new sap.ui.model.Filter({
                 path: "WiRhTask",
                 operator: sap.ui.model.FilterOperator.EQ,
-                value1: "TS00800531"
+                value1: "TS20000166"
             });
 
             var that = this;
@@ -128,12 +129,31 @@ sap.ui.define([
                         that.getView().setModel(newModel);
                         that.getView().byId("detailPage");
                         that.getModel("detailView").setProperty("/busy", false);
-
+                        
+            that._attachData();
 
                     }
                 },
                 error: function (oError) {
 
+                }
+            });
+        },
+        _attachData: function () {
+            var useFulData = this.getView().getModel().getData().results[0].WiId;
+            var srvUrl = "/sap/opu/odata/IWPGW/TASKPROCESSING;mo;v=2/";
+            var oModel1 = new sap.ui.model.odata.ODataModel(srvUrl, true, "","");
+            var readurl = "/TaskCollection(SAP__Origin='LOCAL',InstanceID='"+ useFulData + "')/Attachments";
+            var that = this;
+            oModel1.read(readurl, {
+                success: function (oData) {
+                   
+                    var newData = oData;
+                        var newModel = new JSONModel(newData);
+                        that.getView().setModel(newModel,"oModelAttach")
+                }.bind(that),
+                error: function (oError) {
+                    sap.m.MessageToast.show("Error occured reading data");
                 }
             });
         },
