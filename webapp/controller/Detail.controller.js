@@ -130,7 +130,7 @@ sap.ui.define([
                         that.getView().byId("detailPage");
                         that.getModel("detailView").setProperty("/busy", false);
                         
-            that._attachData();
+            that._attachData(); //for getting data of attachment
 
                     }
                 },
