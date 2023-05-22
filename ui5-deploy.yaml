@@ -14,8 +14,8 @@ builder:
       afterTask: generateCachebusterInfo
       configuration:
         target:
-          url: https://saps4d.vets4pets.com/
-          client: "400"
+          url: https://s4hana1909.server.com:8006
+          client: "800"
         app:
           name: ZZRENEW_DNT
           description: renew demo
